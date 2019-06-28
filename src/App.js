@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { connect } from "react-redux";
 
-import { connect } from 'react-redux';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>React-Redux Setup</h1>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <div>
+          Current number: <span>{this.props.number}</span>
+        </div>
+        <button onClick = { this.props.OnChangeUp }> Number Up</button>
+        <button onClick = { this.props.OnChangeDown }> Number Down</button>
+      </div>
+    );
+  }
 }
 
-const mapStateProps = state => {
-  return;
+const mapStateToProps = state => {
+  return {
+    number: state.number
+  };
 };
 
-const mapDispatchProps = dispatch => {
-  return;
+const mapDispachToProps = dispatch => {
+  return {
+    OnChangeUp: () => dispatch({type: 'NUMBER_UP', value: 1}),
+    OnChangeDown: () => dispatch({type: 'NUMBER_DOWN', value: 1})
+  };
 };
 
-export default connect(mapStateProps, mapDispatchProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispachToProps
+)(App);
